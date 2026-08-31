@@ -57,6 +57,7 @@ export interface Pokemon {
   sprites: PokemonSprites
   moves: PokemonMove[]
   stats: PokemonStat[]
+  species: NamedAPIResource
 }
 export interface FlavorTextEntry {
   flavor_text: string

@@ -5,6 +5,7 @@ import { TYPE_COLORS, TYPE_NAMES_PT } from '../constants/typeColors'
 import { GAME_BY_SLUG } from '../constants/games'
 import { usePokedex, usePokemon } from '../hooks/usePokeAPI'
 import { useFavorites } from '../hooks/useFavorites'
+import { displayName } from '../constants/names'
 import type { PokemonEntry } from '../types/pokeapi'
 
 // All 18 types for the filter strip
@@ -23,11 +24,14 @@ function PokemonCard({
   const navigate = useNavigate()
   const name = entry.pokemon_species.name
   const number = entry.entry_number
+  // O ID nacional vem da URL da species. entry_number é o número REGIONAL —
+  // usá-lo como ID nacional trocava o sprite (Johto #1 mostrava Bulbasaur).
+  const nationalId = Number(entry.pokemon_species.url.split('/').filter(Boolean).pop())
   const { data: pokemon } = usePokemon(name)
   const { isFavorite, toggle } = useFavorites()
 
   const spriteUrl = pokemon?.sprites.front_default
-    ?? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`
+    ?? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nationalId}.png`
 
   const types = pokemon?.types ?? []
 
@@ -46,7 +50,7 @@ function PokemonCard({
       >
         <img
           src={spriteUrl}
-          alt={name}
+          alt={displayName(name)}
           width={56}
           height={56}
           className="shrink-0 drop-shadow-sm"
@@ -55,7 +59,7 @@ function PokemonCard({
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span className="text-xs font-bold text-gray-400">#{String(number).padStart(3, '0')}</span>
-            <span className="truncate font-semibold capitalize text-gray-900 dark:text-white">{name}</span>
+            <span className="truncate font-semibold text-gray-900 dark:text-white">{displayName(name)}</span>
           </div>
           <div className="mt-1 flex gap-1">
             {types.map(t => {
@@ -109,12 +113,13 @@ export function PokemonListPage() {
       if (!q) return true
       return (
         e.pokemon_species.name.includes(q) ||
+        displayName(e.pokemon_species.name).toLowerCase().includes(q) ||
         String(e.entry_number).includes(q)
       )
     })
     if (sortMode === 'name') {
       return [...entries].sort((a, b) =>
-        a.pokemon_species.name.localeCompare(b.pokemon_species.name)
+        displayName(a.pokemon_species.name).localeCompare(displayName(b.pokemon_species.name))
       )
     }
     return entries // already in pokédex order (by number)
@@ -275,7 +280,7 @@ export function PokemonListPage() {
         <div className="flex flex-col gap-2">
           {filtered.map(entry => (
             <PokemonCard
-              key={entry.entry_number}
+              key={entry.pokemon_species.name}
               entry={entry}
               gameSlug={gameId}
               typeFilters={typeFilters}

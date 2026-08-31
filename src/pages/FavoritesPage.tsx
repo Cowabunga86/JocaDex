@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router'
 import { TYPE_COLORS, TYPE_NAMES_PT } from '../constants/typeColors'
 import { usePokemon } from '../hooks/usePokeAPI'
 import { useFavorites } from '../hooks/useFavorites'
+import { displayName } from '../constants/names'
 
 function FavoriteCard({ name }: { name: string }) {
   const navigate = useNavigate()
   const { data: pokemon } = usePokemon(name)
   const { toggle } = useFavorites()
 
-  const spriteUrl =
-    pokemon?.sprites.front_default ??
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${name}.png`
+  // A URL de sprite espera ID numérico — passar o nome dava imagem quebrada.
+  // Sem o dado carregado, mostramos um placeholder.
+  const spriteUrl = pokemon?.sprites.front_default ?? null
   const types = pokemon?.types ?? []
   const id = pokemon?.id
 
@@ -21,15 +22,19 @@ function FavoriteCard({ name }: { name: string }) {
         onClick={() => navigate(`/favorites/pokemon/${name}`)}
         className="flex flex-1 items-center gap-3 text-left"
       >
-        <img
-          src={spriteUrl}
-          alt={name}
-          width={56}
-          height={56}
-          className="shrink-0 drop-shadow-sm"
-          style={{ imageRendering: 'pixelated' }}
-          loading="lazy"
-        />
+        {spriteUrl ? (
+          <img
+            src={spriteUrl}
+            alt={displayName(name)}
+            width={56}
+            height={56}
+            className="shrink-0 drop-shadow-sm"
+            style={{ imageRendering: 'pixelated' }}
+            loading="lazy"
+          />
+        ) : (
+          <div className="h-14 w-14 shrink-0 animate-pulse rounded-full bg-gray-200 dark:bg-gray-700" />
+        )}
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             {id && (
@@ -37,8 +42,8 @@ function FavoriteCard({ name }: { name: string }) {
                 #{String(id).padStart(3, '0')}
               </span>
             )}
-            <span className="truncate font-semibold capitalize text-gray-900 dark:text-white">
-              {name}
+            <span className="truncate font-semibold text-gray-900 dark:text-white">
+              {displayName(name)}
             </span>
           </div>
           <div className="mt-1 flex gap-1 flex-wrap">

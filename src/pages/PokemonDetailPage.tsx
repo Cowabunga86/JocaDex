@@ -10,6 +10,7 @@ import {
 } from '../hooks/usePokeAPI'
 import { useFavorites } from '../hooks/useFavorites'
 import type { ChainLink, EvolutionDetail } from '../types/pokeapi'
+import { displayName } from '../constants/names'
 
 
 // ─── Lookup de nomes de formas especiais ──────────────────────────────────
@@ -41,7 +42,7 @@ function SpecialFormCard({
       {form ? (
         <img
           src={form.sprites.front_default ?? ''}
-          alt={name}
+          alt={displayName(name)}
           width={72}
           height={72}
           style={{ imageRendering: 'pixelated' }}
@@ -219,10 +220,10 @@ function EvolutionRow({
                 onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
               />
               <span className={[
-                'text-[9px] font-semibold capitalize mt-0.5',
+                'text-[9px] font-semibold mt-0.5',
                 isCurrent ? 'text-gray-700 dark:text-gray-200' : 'text-gray-400',
               ].join(' ')}>
-                {link.species.name.replace(/-/g, ' ')}
+                {displayName(link.species.name)}
               </span>
             </button>
           </div>
@@ -388,7 +389,7 @@ export function PokemonDetailPage() {
     return pokemon.moves
       .flatMap(m => {
         const detail = m.version_group_details.find(
-          d => d.version_group.name === gameId && d.move_learn_method.name === 'level-up'
+          d => d.version_group.name === vgName && d.move_learn_method.name === 'level-up'
         )
         if (!detail) return []
         return [{ name: m.move.name, level: detail.level_learned_at }]
@@ -401,7 +402,7 @@ export function PokemonDetailPage() {
     return pokemon.moves
       .flatMap(m => {
         const detail = m.version_group_details.find(
-          d => d.version_group.name === gameId && d.move_learn_method.name === 'machine'
+          d => d.version_group.name === vgName && d.move_learn_method.name === 'machine'
         )
         if (!detail) return []
         return [{ name: m.move.name }]
@@ -482,10 +483,10 @@ export function PokemonDetailPage() {
 
           <div className="min-w-0 flex-1">
             <h1
-              className="truncate text-xs font-black capitalize leading-none text-white"
+              className="truncate text-xs font-black leading-none text-white"
               style={{ fontFamily: "'Press Start 2P', monospace" }}
             >
-              {pokemon.name}
+              {displayName(species?.name ?? pokemon.name)}
             </h1>
             {genus && <p className="mt-1.5 text-xs text-white/70">{genus}</p>}
           </div>
@@ -510,8 +511,8 @@ export function PokemonDetailPage() {
                 className="flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold text-white hover:bg-white/30 active:scale-95 transition-all"
               >
                 <ChevronLeft size={12} />
-                <span className="capitalize max-w-[90px] truncate">
-                  {prevEntry.pokemon_species.name.replace(/-/g, ' ')}
+                <span className="max-w-[90px] truncate">
+                  {displayName(prevEntry.pokemon_species.name)}
                 </span>
               </button>
             ) : <div />}
@@ -520,8 +521,8 @@ export function PokemonDetailPage() {
                 onClick={() => goToPokemon(nextEntry.pokemon_species.name)}
                 className="flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold text-white hover:bg-white/30 active:scale-95 transition-all"
               >
-                <span className="capitalize max-w-[90px] truncate">
-                  {nextEntry.pokemon_species.name.replace(/-/g, ' ')}
+                <span className="max-w-[90px] truncate">
+                  {displayName(nextEntry.pokemon_species.name)}
                 </span>
                 <ChevronRight size={12} />
               </button>
