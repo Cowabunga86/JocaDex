@@ -1,0 +1,27 @@
+export const TYPE_COLORS: Record<string, { bg: string; text: string }> = {
+  fire:     { bg: '#F08030', text: '#fff' },
+  water:    { bg: '#6890F0', text: '#fff' },
+  grass:    { bg: '#78C850', text: '#fff' },
+  electric: { bg: '#F8D030', text: '#333' },
+  psychic:  { bg: '#F85888', text: '#fff' },
+  normal:   { bg: '#A8A878', text: '#fff' },
+  ice:      { bg: '#98D8D8', text: '#333' },
+  dragon:   { bg: '#7038F8', text: '#fff' },
+  dark:     { bg: '#705848', text: '#fff' },
+  steel:    { bg: '#B8B8D0', text: '#333' },
+  fairy:    { bg: '#EE99AC', text: '#fff' },
+  rock:     { bg: '#B8A038', text: '#fff' },
+  ground:   { bg: '#E0C068', text: '#333' },
+  flying:   { bg: '#A890F0', text: '#fff' },
+  bug:      { bg: '#A8B820', text: '#fff' },
+  poison:   { bg: '#A040A0', text: '#fff' },
+  ghost:    { bg: '#705898', text: '#fff' },
+  fighting: { bg: '#C03028', text: '#fff' },
+}
+export const TYPE_NAMES_PT: Record<string, string> = {
+  fire: 'Fogo', water: 'Água', grass: 'Grama', electric: 'Elétrico',
+  psychic: 'Psíquico', normal: 'Normal', ice: 'Gelo', dragon: 'Dragão',
+  dark: 'Sombrio', steel: 'Aço', fairy: 'Fada', rock: 'Pedra',
+  ground: 'Terra', flying: 'Voador', bug: 'Inseto', poison: 'Veneno',
+  ghost: 'Fantasma', fighting: 'Lutador',
+}

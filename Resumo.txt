@@ -1,0 +1,3 @@
+A ideia central do app (JOCADEX) é montar um web app para que ele possa instalar no celular e acessar a lista de Pokémon por jogo da franquia e nele ver a ordem que o Pokémon aprende cada ataque, a imagem do Pokémon, tipo do Pokémon e etc. Pro banco de daods vamos utilizar a PokeAPI( https://pokeapi.co/ ). A documentação do PokeAPI está no link https://pokeapi.co/docs/v2.
+
+Descrição do projeto: https://claude.ai/code/artifact/1f106d7e-a504-4754-9aed-697192e1a603?open_in_browser=1&via=user_open&org=72096565-88b7-4c05-94df-f7fdb296fb0f
