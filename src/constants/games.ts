@@ -21,7 +21,7 @@ export const GAMES: GameInfo[] = [
   // Geração III
   { slug: 'ruby-sapphire',      name: 'Ruby / Sapphire',         generation: 3, color: '#B91C1C', color2: '#1E3A8A', textColor: '#fff', pokedexId: 15, coverPokemon: [383, 382]   }, // Groudon, Kyogre
   { slug: 'emerald',            name: 'Emerald',                 generation: 3, color: '#15803D', textColor: '#fff', pokedexId: 15, coverPokemon: [384]        }, // Rayquaza
-  { slug: 'firered-leafgreen',  name: 'FireRed / LeafGreen',     generation: 3, color: '#EA580C', color2: '#16A34A', textColor: '#fff', pokedexId: 2,  coverPokemon: [6, 3]       }, // Charizard, Venusaur
+  { slug: 'firered-leafgreen',  name: 'FireRed / LeafGreen',     generation: 1, color: '#EA580C', color2: '#16A34A', textColor: '#fff', pokedexId: 2,  coverPokemon: [6, 3]       }, // Charizard, Venusaur
   // Geração IV
   { slug: 'diamond-pearl',      name: 'Diamond / Pearl',         generation: 4, color: '#4F46E5', color2: '#BE185D', textColor: '#fff', pokedexId: 16, coverPokemon: [483, 484]   }, // Dialga, Palkia
   { slug: 'platinum',           name: 'Platinum',                generation: 4, color: '#475569', textColor: '#fff', pokedexId: 16, coverPokemon: [487]        }, // Giratina
