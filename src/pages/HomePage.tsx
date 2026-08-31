@@ -50,6 +50,7 @@ function GameCard({ game }: { game: GameInfo }) {
 }
 
 export function HomePage() {
+  const navigate = useNavigate()
   const { data, isLoading } = useVersionGroups()
   const { favorites } = useFavorites()
 
