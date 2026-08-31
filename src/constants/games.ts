@@ -37,7 +37,7 @@ export const GAMES: GameInfo[] = [
   { slug: 'ultra-sun-ultra-moon', name: 'Ultra Sun / Ultra Moon', generation: 7, color: '#92400E', color2: '#3B0764', textColor: '#fff', pokedexId: 21, coverPokemon: [10155, 10156] }, // Necrozma formes
   // Geração VIII
   { slug: 'sword-shield',       name: 'Sword / Shield',          generation: 8, color: '#0369A1', color2: '#BE123C', textColor: '#fff', pokedexId: 27, coverPokemon: [888, 889]   }, // Zacian, Zamazenta
-  { slug: 'brilliant-diamond-shining-pearl', apiVersionGroup: 'diamond-pearl', name: 'BD / SP', generation: 10, color: '#4F46E5', color2: '#DB2777', textColor: '#fff', pokedexId: 16, coverPokemon: [483, 484] }, // Dialga, Palkia — PokeAPI usa diamond/pearl para BDSP
+  { slug: 'brilliant-diamond-shining-pearl', apiVersionGroup: 'diamond-pearl', name: 'B. Diamond / S. Pearl', generation: 10, color: '#4F46E5', color2: '#DB2777', textColor: '#fff', pokedexId: 16, coverPokemon: [483, 484] }, // Dialga, Palkia — PokeAPI usa diamond/pearl para BDSP
   { slug: 'the-isle-of-armor',  name: 'Isle of Armor DLC',       generation: 8, color: '#047857', textColor: '#fff', pokedexId: 28, coverPokemon: [891]        }, // Kubfu
   { slug: 'legends-arceus',    name: 'Legends: Arceus',         generation: 11, color: '#78350F', color2: '#D97706', textColor: '#fff', pokedexId: 'hisui',        coverPokemon: [493],       noEncounterData: true }, // Arceus
   // Geração IX
