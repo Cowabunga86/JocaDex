@@ -20,7 +20,7 @@ function GameCard({ game }: { game: GameInfo }) {
       {/* Texto */}
       <div className="z-10 flex-1 pr-2">
         <span className="block text-[10px] font-bold uppercase tracking-widest opacity-60">
-          Gen {game.generation}
+          {GEN_LABELS[game.generation] ?? `Gen ${game.generation}`}
         </span>
         <span className="block text-sm font-bold leading-tight">{game.name}</span>
       </div>
