@@ -66,3 +66,7 @@ O filtro de tipos usa a lista de tipos da versão do jogo retornada pela PokéAP
 ## Licença
 
 MIT.
+
+## Marcas
+
+Pokémon, Pokédex e todos os nomes de Pokémon são marcas registradas da Nintendo, Game Freak e Creatures Inc. Os dados exibidos são obtidos da [PokéAPI](https://pokeapi.co/), uma API de terceiros não oficial. Este projeto é independente, de uso pessoal, sem fins comerciais e sem vínculo, patrocínio ou aprovação da Nintendo, Game Freak ou Creatures Inc.
