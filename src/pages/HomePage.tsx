@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router'
+import { Heart } from 'lucide-react'
+import { useFavorites } from '../hooks/useFavorites'
 import { GEN_LABELS, GAMES, spriteUrl, type GameInfo } from '../constants/games'
 import { useVersionGroups } from '../hooks/usePokeAPI'
 
@@ -49,6 +51,7 @@ function GameCard({ game }: { game: GameInfo }) {
 
 export function HomePage() {
   const { data, isLoading } = useVersionGroups()
+  const { favorites } = useFavorites()
 
   const availableSlugs = new Set(data?.results.map(r => r.name) ?? [])
   const games = GAMES.filter(g => availableSlugs.size === 0 || availableSlugs.has(g.slug))
@@ -66,6 +69,13 @@ export function HomePage() {
           <span className="text-[#FFCB05]">JOCA</span>DEX
         </h1>
         <span className="text-xs font-medium text-red-200">Escolha um jogo</span>
+        <button
+          onClick={() => navigate('/favorites')}
+          className="flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/30"
+        >
+          <Heart size={13} className="fill-white text-white" />
+          Favoritos{favorites.length > 0 && ` (${favorites.length})`}
+        </button>
       </header>
 
       <main className="mx-auto max-w-lg px-4 pb-8 pt-6">

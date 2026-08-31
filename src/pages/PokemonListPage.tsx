@@ -14,11 +14,11 @@ const ALL_TYPES = Object.keys(TYPE_COLORS)
 function PokemonCard({
   entry,
   gameSlug,
-  typeFilter,
+  typeFilters,
 }: {
   entry: PokemonEntry
   gameSlug: string
-  typeFilter: string | null
+  typeFilters: string[]
 }) {
   const navigate = useNavigate()
   const name = entry.pokemon_species.name
@@ -31,8 +31,8 @@ function PokemonCard({
 
   const types = pokemon?.types ?? []
 
-  // Type filter: once data is loaded, hide cards that don't match
-  if (typeFilter && pokemon && !types.some(t => t.type.name === typeFilter)) {
+  // Type filter: hide cards that don't match ALL selected types
+  if (typeFilters.length > 0 && pokemon && !typeFilters.every(tf => types.some(t => t.type.name === tf))) {
     return null
   }
 
@@ -93,7 +93,7 @@ export function PokemonListPage() {
   const { gameId = '' } = useParams()
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
-  const [typeFilter, setTypeFilter] = useState<string | null>(null)
+  const [typeFilters, setTypeFilters] = useState<string[]>([])
   const [showFavOnly, setShowFavOnly] = useState(false)
   const [sortMode, setSortMode] = useState<'number' | 'name'>('number')
   const { favorites } = useFavorites()
@@ -119,6 +119,7 @@ export function PokemonListPage() {
     }
     return entries // already in pokédex order (by number)
   }, [pokedex, search, showFavOnly, favorites, sortMode])
+
 
   return (
     <div className="page-enter min-h-svh bg-white dark:bg-gray-950">
@@ -202,10 +203,10 @@ export function PokemonListPage() {
           <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none flex-1">
           {/* "Todos" chip */}
           <button
-            onClick={() => setTypeFilter(null)}
+            onClick={() => setTypeFilters([])}
             className={[
               'shrink-0 rounded-full px-3 py-1 text-[10px] font-bold transition-all',
-              typeFilter === null
+              typeFilters.length === 0
                 ? 'bg-white text-gray-800'
                 : 'bg-white/20 text-white hover:bg-white/30',
             ].join(' ')}
@@ -214,11 +215,11 @@ export function PokemonListPage() {
           </button>
           {ALL_TYPES.map(type => {
             const color = TYPE_COLORS[type]
-            const active = typeFilter === type
+            const active = typeFilters.includes(type)
             return (
               <button
                 key={type}
-                onClick={() => setTypeFilter(active ? null : type)}
+                onClick={() => setTypeFilters(prev => active ? prev.filter(t => t !== type) : [...prev, type])}
                 className="shrink-0 rounded-full px-3 py-1 text-[10px] font-bold transition-all"
                 style={
                   active
@@ -277,7 +278,7 @@ export function PokemonListPage() {
               key={entry.entry_number}
               entry={entry}
               gameSlug={gameId}
-              typeFilter={typeFilter}
+              typeFilters={typeFilters}
             />
           ))}
         </div>
