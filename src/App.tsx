@@ -1,10 +1,10 @@
-import { createBrowserRouter, RouterProvider } from 'react-router'
+import { createHashRouter, RouterProvider } from 'react-router'
 import { HomePage } from './pages/HomePage'
 import { FavoritesPage } from './pages/FavoritesPage'
 import { PokemonDetailPage } from './pages/PokemonDetailPage'
 import { PokemonListPage } from './pages/PokemonListPage'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   { path: '/', element: <HomePage /> },
   { path: '/favorites', element: <FavoritesPage /> },
   { path: '/favorites/pokemon/:pokemonId', element: <PokemonDetailPage /> },
