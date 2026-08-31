@@ -23,6 +23,15 @@ function GameCard({ game }: { game: GameInfo }) {
           {GEN_LABELS[game.generation] ?? `Gen ${game.generation}`}
         </span>
         <span className="block text-sm font-bold leading-tight">{game.name}</span>
+        {game.mechanics && game.mechanics.length > 0 && (
+          <div className="mt-1 flex flex-wrap gap-1">
+            {game.mechanics.map(m => (
+              <span key={m.label} className="rounded px-1 py-0.5 text-[8px] font-bold" style={{ background: 'rgba(0,0,0,0.2)' }}>
+                {m.label}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Sprites de capa */}

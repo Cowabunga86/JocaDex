@@ -71,6 +71,7 @@ export interface PokemonSpecies {
   evolution_chain: { url: string }
   flavor_text_entries: FlavorTextEntry[]
   genera: { genus: string; language: NamedAPIResource }[]
+  varieties: { is_default: boolean; pokemon: NamedAPIResource }[]
 }
 export interface MoveDetail {
   id: number

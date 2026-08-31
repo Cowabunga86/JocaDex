@@ -1,3 +1,8 @@
+export type GameMechanic = {
+  label: string
+  formFilter?: string  // filtra varieties da species que contêm essa substring
+}
+
 export interface GameInfo {
   slug: string
   apiVersionGroup?: string  // nome no PokeAPI quando diferente do slug
@@ -9,6 +14,7 @@ export interface GameInfo {
   textColor: string
   pokedexId: string | number
   coverPokemon: number[]    // IDs dos Pokémon de capa (1 ou 2)
+  mechanics?: GameMechanic[] // mecânicas especiais do jogo (Mega, Gmax, etc.)
 }
 
 export const GAMES: GameInfo[] = [
@@ -30,19 +36,19 @@ export const GAMES: GameInfo[] = [
   { slug: 'black-white',        name: 'Black / White',           generation: 5, color: '#1C1917', color2: '#94A3B8', textColor: '#fff', pokedexId: 21, coverPokemon: [643, 644]   }, // Reshiram, Zekrom
   { slug: 'black-2-white-2',    name: 'Black 2 / White 2',       generation: 5, color: '#111827', color2: '#9CA3AF', textColor: '#fff', pokedexId: 21, coverPokemon: [10022, 10023] }, // Kyurem-Black, Kyurem-White
   // Geração VI
-  { slug: 'x-y',                name: 'X / Y',                  generation: 6, color: '#1D4ED8', color2: '#BE123C', textColor: '#fff', pokedexId: 12, coverPokemon: [716, 717]   }, // Xerneas, Yveltal
-  { slug: 'omega-ruby-alpha-sapphire', name: 'Omega Ruby / Alpha Sapphire', generation: 10, color: '#9F1239', color2: '#1E3A8A', textColor: '#fff', pokedexId: 15, coverPokemon: [383, 382] },
+  { slug: 'x-y',                mechanics: [{ label: 'Mega Evolução', formFilter: 'mega' }],                name: 'X / Y',                  generation: 6, color: '#1D4ED8', color2: '#BE123C', textColor: '#fff', pokedexId: 12, coverPokemon: [716, 717]   }, // Xerneas, Yveltal
+  { slug: 'omega-ruby-alpha-sapphire', mechanics: [{ label: 'Mega Evolução', formFilter: 'mega' }], name: 'Omega Ruby / Alpha Sapphire', generation: 10, color: '#9F1239', color2: '#1E3A8A', textColor: '#fff', pokedexId: 15, coverPokemon: [383, 382] },
   // Geração VII
-  { slug: 'sun-moon',           name: 'Sun / Moon',              generation: 7, color: '#D97706', color2: '#4C1D95', textColor: '#fff', pokedexId: 21, coverPokemon: [791, 792]   }, // Solgaleo, Lunala
-  { slug: 'ultra-sun-ultra-moon', name: 'Ultra Sun / Ultra Moon', generation: 7, color: '#92400E', color2: '#3B0764', textColor: '#fff', pokedexId: 21, coverPokemon: [10155, 10156] }, // Necrozma formes
+  { slug: 'sun-moon',           mechanics: [{ label: 'Z-Moves' }],           name: 'Sun / Moon',              generation: 7, color: '#D97706', color2: '#4C1D95', textColor: '#fff', pokedexId: 21, coverPokemon: [791, 792]   }, // Solgaleo, Lunala
+  { slug: 'ultra-sun-ultra-moon', mechanics: [{ label: 'Z-Moves' }], name: 'Ultra Sun / Ultra Moon', generation: 7, color: '#92400E', color2: '#3B0764', textColor: '#fff', pokedexId: 21, coverPokemon: [10155, 10156] }, // Necrozma formes
   // Geração VIII
-  { slug: 'sword-shield',       name: 'Sword / Shield',          generation: 8, color: '#0369A1', color2: '#BE123C', textColor: '#fff', pokedexId: 27, coverPokemon: [888, 889]   }, // Zacian, Zamazenta
+  { slug: 'sword-shield',       mechanics: [{ label: 'Dynamax' }, { label: 'Gigantamax', formFilter: 'gmax' }],       name: 'Sword / Shield',          generation: 8, color: '#0369A1', color2: '#BE123C', textColor: '#fff', pokedexId: 27, coverPokemon: [888, 889]   }, // Zacian, Zamazenta
   { slug: 'brilliant-diamond-shining-pearl', apiVersionGroup: 'diamond-pearl', name: 'B. Diamond / S. Pearl', generation: 10, color: '#4F46E5', color2: '#DB2777', textColor: '#fff', pokedexId: 16, coverPokemon: [483, 484] }, // Dialga, Palkia — PokeAPI usa diamond/pearl para BDSP
-  { slug: 'the-isle-of-armor',  name: 'Isle of Armor DLC',       generation: 8, color: '#047857', textColor: '#fff', pokedexId: 28, coverPokemon: [891]        }, // Kubfu
+  { slug: 'the-isle-of-armor',  mechanics: [{ label: 'Gigantamax', formFilter: 'gmax' }],  name: 'Isle of Armor DLC',       generation: 8, color: '#047857', textColor: '#fff', pokedexId: 28, coverPokemon: [891]        }, // Kubfu
   { slug: 'legends-arceus',    name: 'Legends: Arceus',         generation: 11, color: '#78350F', color2: '#D97706', textColor: '#fff', pokedexId: 'hisui',        coverPokemon: [493],       noEncounterData: true }, // Arceus
   // Geração IX
-  { slug: 'scarlet-violet',     name: 'Scarlet / Violet',        generation: 9, color: '#9F1239', color2: '#5B21B6', textColor: '#fff', pokedexId: 31, coverPokemon: [1007, 1008], noEncounterData: true }, // Koraidon, Miraidon — PokeAPI não tem dados de encontro para SV
-  { slug: 'legends-za',         name: 'Legends: Z-A',            generation: 11, color: '#0F172A', color2: '#EAB308', textColor: '#fff', pokedexId: 'lumiose-city', coverPokemon: [150],       noEncounterData: true }, // Mewtwo
+  { slug: 'scarlet-violet',     mechanics: [{ label: 'Terastal' }],     name: 'Scarlet / Violet',        generation: 9, color: '#9F1239', color2: '#5B21B6', textColor: '#fff', pokedexId: 31, coverPokemon: [1007, 1008], noEncounterData: true }, // Koraidon, Miraidon — PokeAPI não tem dados de encontro para SV
+  { slug: 'legends-za',         mechanics: [{ label: 'Mega Evolução', formFilter: 'mega' }],         name: 'Legends: Z-A',            generation: 11, color: '#0F172A', color2: '#EAB308', textColor: '#fff', pokedexId: 'lumiose-city', coverPokemon: [150],       noEncounterData: true }, // Mewtwo
 ]
 
 export const GAME_BY_SLUG = Object.fromEntries(GAMES.map(g => [g.slug, g]))

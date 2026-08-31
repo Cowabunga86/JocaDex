@@ -11,6 +11,56 @@ import {
 import { useFavorites } from '../hooks/useFavorites'
 import type { ChainLink, EvolutionDetail } from '../types/pokeapi'
 
+
+// ─── Lookup de nomes de formas especiais ──────────────────────────────────
+const FORM_LABELS: Record<string, string> = {
+  mega:   'Mega',
+  'mega-x': 'Mega X',
+  'mega-y': 'Mega Y',
+  gmax:   'Gigantamax',
+}
+
+function getFormLabel(baseName: string, varietyName: string): string {
+  const suffix = varietyName.startsWith(`${baseName}-`)
+    ? varietyName.slice(baseName.length + 1)
+    : varietyName
+  return FORM_LABELS[suffix] ?? suffix.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+}
+
+// ─── Card de forma especial ───────────────────────────────────────────────
+function SpecialFormCard({
+  name,
+  label,
+}: {
+  name: string
+  label: string
+}) {
+  const { data: form } = usePokemon(name)
+  return (
+    <div className="flex flex-col items-center gap-1.5 rounded-2xl bg-gray-50 px-4 py-3 dark:bg-gray-700">
+      {form ? (
+        <img
+          src={form.sprites.front_default ?? ''}
+          alt={name}
+          width={72}
+          height={72}
+          style={{ imageRendering: 'pixelated' }}
+          className="drop-shadow"
+          onError={e => { (e.target as HTMLImageElement).style.opacity = '0.3' }}
+        />
+      ) : (
+        <div className="h-[72px] w-[72px] animate-pulse rounded-full bg-gray-200 dark:bg-gray-600" />
+      )}
+      <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400">{label}</span>
+      {form && (
+        <div className="flex flex-wrap justify-center gap-1">
+          {form.types.map(t => <TypeChip key={t.type.name} type={t.type.name} />)}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Mapeamento de stats ───────────────────────────────────────────────────
 const STAT_INFO: Record<string, { label: string; color: string }> = {
   hp:               { label: 'PS',        color: '#4CAF50' },
@@ -385,6 +435,18 @@ export function PokemonDetailPage() {
   })
   const hasEvolution = uniqueEvoPaths && uniqueEvoPaths.some(p => p.length > 1)
 
+
+  // ── Formas especiais do jogo (Mega, Gigantamax…) ─────────────────────
+  const specialForms = (() => {
+    if (!species || !game?.mechanics) return []
+    const filters = game.mechanics.filter(m => m.formFilter).map(m => m.formFilter!)
+    if (!filters.length) return []
+    return species.varieties
+      .map(v => v.pokemon.name)
+      .filter(n => n !== pokemon?.name && filters.some(f => n.includes(f)))
+      .map(n => ({ name: n, label: getFormLabel(pokemon?.name ?? '', n) }))
+  })()
+
   // ── Loading / erro ────────────────────────────────────────────────────
   if (isLoading) return <LoadingSkeleton color={headerBg} />
 
@@ -543,6 +605,21 @@ export function PokemonDetailPage() {
                   currentName={pokemonId}
                   onNavigate={goToPokemon}
                 />
+              ))}
+            </div>
+          </section>
+        )}
+
+
+        {/* ── Formas Especiais ── */}
+        {specialForms.length > 0 && (
+          <section className="mb-4 rounded-2xl bg-white px-5 py-4 shadow-sm dark:bg-gray-800">
+            <h2 className="mb-3 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+              Formas Especiais — {game?.name}
+            </h2>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {specialForms.map(f => (
+                <SpecialFormCard key={f.name} name={f.name} label={f.label} />
               ))}
             </div>
           </section>
