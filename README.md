@@ -1,90 +1,68 @@
-<div align="center">
+# JocaDex
 
-# 🎮 JocaDex
+Pokédex feita para o Joca — escolha o jogo, explore os Pokémon daquela geração e favorite os que quiser. Funciona no celular, instala como app e roda sem internet após o primeiro acesso.
 
-**Pokédex PWA feita com amor para o Joca**
+Não tem backend. Tudo vem da [PokéAPI](https://pokeapi.co/), é cacheado pelo navegador e fica disponível offline via Service Worker. Abrir e sair para o jogo e voltar mais tarde funciona sem precisar de conexão.
 
-Uma Pokédex completa, rápida e offline-first — escolha o jogo, explore os Pokémon e favorite seus preferidos.
+## Por que existe
 
-![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=flat-square&logo=tailwindcss)
-![PWA](https://img.shields.io/badge/PWA-offline--ready-5A0FC8?style=flat-square)
+As Pokédex online são pesadas, cheias de anúncio e abertas no computador — difíceis de usar enquanto você joga no Nintendo Switch ou num portátil. Esta é pequena, mobile-first, abre instantaneamente e só mostra os Pokémon do jogo que você escolheu, na ordem certa, com os tipos certos daquela versão.
 
-</div>
+## Como usar
 
----
+Escolha um jogo na tela inicial. A lista mostra todos os Pokémon disponíveis naquele jogo, na ordem da Pokédex regional. Toque em qualquer um para ver a ficha completa: stats, movimentos por nível e MT, cadeia evolutiva e fraquezas/resistências.
 
-## ✨ Funcionalidades
+Para filtrar por tipo, toque em um ou mais tipos no topo da lista — o filtro funciona em modo AND: selecionar Fogo e Voador mostra só os que têm os dois tipos ao mesmo tempo. Para favoritar, toque no ♥ na ficha ou na listagem. Os favoritos ficam salvos entre sessões e aparecem todos juntos no botão **Favoritos** na tela inicial, independente do jogo em que foram marcados.
 
-- **Todos os jogos principais** — Geração 1 a 9, incluindo remakes (FireRed, HGSS, ORAS, BDSP…)
-- **Busca por nome ou número** dentro de cada Pokédex
-- **Filtro por tipo** com suporte a múltiplos tipos simultâneos (ex: Fogo + Voador)
-- **Ordenação** por número (#) ou nome (A-Z)
-- **Favoritos globais** — favorite em qualquer jogo e veja todos num só lugar
-- **Ficha completa** com stats, movimentos (Level-up e MT/MO), fraquezas & resistências e cadeia evolutiva
-- **Navegação prev/next** entre Pokémon dentro do jogo
-- **Dark mode** automático (segue o sistema)
-- **PWA com cache offline** — funciona sem internet após o primeiro acesso
-- **Layout mobile-first** — feito para usar no celular
+A busca aceita nome ou número. A ordenação alterna entre número (#) e nome (A-Z).
 
----
-
-## 🛠️ Stack
-
-| Camada | Tecnologia |
-|---|---|
-| UI | React 19 + TypeScript |
-| Build | Vite 8 |
-| Estilo | Tailwind CSS v4 |
-| Roteamento | React Router v7 |
-| Dados remotos | TanStack Query v5 |
-| API | [PokéAPI v2](https://pokeapi.co/) (REST, sem backend) |
-| PWA | vite-plugin-pwa + Workbox |
-| Ícones | Lucide React |
-
----
-
-## 🚀 Rodando localmente
+## Instalação local
 
 ```bash
-# Clone o repositório
 git clone https://github.com/Cowabunga86/JocaDex.git
 cd JocaDex
-
-# Instale as dependências
 npm install
-
-# Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-Abra [http://localhost:5173](http://localhost:5173) no navegador.
+Abra [http://localhost:5173](http://localhost:5173).
 
 ```bash
 # Build de produção
 npm run build
-
-# Preview do build
 npm run preview
 ```
 
----
+## Recursos
 
-## 📁 Estrutura do projeto
+- Todos os jogos principais — Geração 1 a 9, incluindo FireRed/LeafGreen, HGSS, ORAS, BDSP e Scarlet/Violet
+- Filtro multi-tipo com lógica AND — filtre por dois ou mais tipos ao mesmo tempo
+- Favoritos globais — favoritados em qualquer jogo, consultados num lugar só
+- Ficha completa — stats base, movimentos por nível e MT/MO, cadeia evolutiva, fraquezas e resistências calculadas pela tabela de tipos
+- Navegação prev/next dentro do jogo, com contexto preservado (volta ao jogo ou à lista de favoritos conforme a origem)
+- Dark mode automático — segue a preferência do sistema
+- PWA instalável — aparece na tela inicial do celular como qualquer outro app
+- Cache offline via Workbox — funciona sem internet após o primeiro acesso
 
-```
-src/
-├── api/           # Funções de fetch da PokéAPI
-├── constants/     # Jogos, cores de tipo e tabela de efetividade
-├── hooks/         # TanStack Query hooks + useFavorites
-├── pages/         # HomePage, PokemonListPage, PokemonDetailPage, FavoritesPage
-└── types/         # Tipagens da PokéAPI
-```
+## Estrutura do projeto
 
----
+| Pasta / arquivo | Função |
+|---|---|
+| `src/api/` | Funções de fetch da PokéAPI |
+| `src/constants/` | Lista de jogos, cores por tipo e tabela de efetividade |
+| `src/hooks/` | Hooks TanStack Query e `useFavorites` (estado global com localStorage) |
+| `src/pages/` | `HomePage`, `PokemonListPage`, `PokemonDetailPage`, `FavoritesPage` |
+| `src/types/` | Tipagens da resposta da PokéAPI |
+| `vite.config.ts` | Configuração do Vite e do plugin PWA |
 
-## 📄 Licença
+## Notas técnicas
 
-MIT — feito com ❤️ para o Joca.
+Os dados de cada Pokémon são buscados individualmente da PokéAPI e cacheados pelo TanStack Query durante a sessão. O cache offline do Service Worker (Workbox) armazena as requisições feitas, então Pokémon que você já visualizou ficam disponíveis sem conexão — os que ainda não foram visitados precisam de internet na primeira vez.
+
+Os favoritos são salvos por nome no `localStorage`, sem vínculo com nenhum jogo específico. A página de favoritos busca os dados de cada Pokémon favoritado separadamente, o que significa que ela também se beneficia do cache offline para os itens já visitados.
+
+O filtro de tipos usa a lista de tipos da versão do jogo retornada pela PokéAPI — em jogos anteriores à introdução de um tipo (como Aço e Sombrio na Geração 2), esses tipos simplesmente não aparecem no filtro.
+
+## Licença
+
+MIT.
