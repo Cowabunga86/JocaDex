@@ -39,8 +39,10 @@ export const GAMES: GameInfo[] = [
   { slug: 'sword-shield',       name: 'Sword / Shield',          generation: 8, color: '#0369A1', color2: '#BE123C', textColor: '#fff', pokedexId: 27, coverPokemon: [888, 889]   }, // Zacian, Zamazenta
   { slug: 'brilliant-diamond-shining-pearl', apiVersionGroup: 'diamond-pearl', name: 'BD / SP', generation: 8, color: '#4F46E5', color2: '#DB2777', textColor: '#fff', pokedexId: 16, coverPokemon: [483, 484] }, // Dialga, Palkia — PokeAPI usa diamond/pearl para BDSP
   { slug: 'the-isle-of-armor',  name: 'Isle of Armor DLC',       generation: 8, color: '#047857', textColor: '#fff', pokedexId: 28, coverPokemon: [891]        }, // Kubfu
+  { slug: 'legends-arceus',    name: 'Legends: Arceus',         generation: 8, color: '#78350F', color2: '#D97706', textColor: '#fff', pokedexId: 'hisui',        coverPokemon: [493],       noEncounterData: true }, // Arceus
   // Geração IX
   { slug: 'scarlet-violet',     name: 'Scarlet / Violet',        generation: 9, color: '#9F1239', color2: '#5B21B6', textColor: '#fff', pokedexId: 31, coverPokemon: [1007, 1008], noEncounterData: true }, // Koraidon, Miraidon — PokeAPI não tem dados de encontro para SV
+  { slug: 'legends-za',         name: 'Legends: Z-A',            generation: 9, color: '#0F172A', color2: '#EAB308', textColor: '#fff', pokedexId: 'lumiose-city', coverPokemon: [150],       noEncounterData: true }, // Mewtwo
 ]
 
 export const GAME_BY_SLUG = Object.fromEntries(GAMES.map(g => [g.slug, g]))
@@ -53,8 +55,8 @@ export const GEN_LABELS: Record<number, string> = {
   5: 'Geração V — Unova',
   6: 'Geração VI — Kalos',
   7: 'Geração VII — Alola',
-  8: 'Geração VIII — Galar',
-  9: 'Geração IX — Paldea',
+  8: 'Geração VIII — Galar / Hisui',
+  9: 'Geração IX — Paldea / Lumiose',
 }
 
 export function spriteUrl(id: number): string {
