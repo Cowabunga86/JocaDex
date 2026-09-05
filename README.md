@@ -1,6 +1,6 @@
 # JocaDex
 
-Pokédex feita para o Joca — escolha o jogo, explore os Pokémon daquela geração e favorite os que quiser. Funciona no celular, instala como app e roda sem internet após o primeiro acesso.
+Pokédex que fiz para o meu filho — escolha o jogo, explore os Pokémon daquela geração e favorite os que quiser. Funciona no celular, instala como app e roda sem internet após o primeiro acesso.
 
 Não tem backend. Tudo vem da [PokéAPI](https://pokeapi.co/), é cacheado pelo navegador e fica disponível offline via Service Worker. Abrir e sair para o jogo e voltar mais tarde funciona sem precisar de conexão.
 
